@@ -19,7 +19,7 @@ class VectorStoreService:
         self.splitter = RecursiveCharacterTextSplitter(
             chunk_size=chroma_conf["chunk_size"],
             chunk_overlap=chroma_conf["chunk_overlap"],
-            separator=chroma_conf["separator"],
+            separators=chroma_conf["separators"],
             length_function=len,
         )
 
@@ -50,10 +50,10 @@ class VectorStoreService:
             elif read_path.endswith(".txt"):
                 return txt_loader(read_path)
             else:
-                raise []
+                return []
 
         allowed_file_path: list[str] = listdir_with_allowed_type(
-            chroma_conf["data_path"],
+            get_abs_path(chroma_conf["data_path"]),
             tuple(chroma_conf["allow_knowledge_file_type"])
         )
 
@@ -82,3 +82,12 @@ class VectorStoreService:
             except Exception as e:
                 logger.error(f"[load_documents]文件{path}处理出错，{str(e)}", exc_info=True)
                 continue
+
+if __name__ == '__main__':
+    vs = VectorStoreService()
+    vs.load_documents()
+    retriever = vs.get_retriever()
+    res = retriever.invoke("迷路")
+    for r in res:
+        print(r.page_content)
+        print("="*20)
