@@ -8,7 +8,6 @@ from utils.file_handler import pdf_loader, txt_loader, listdir_with_allowed_type
 from utils.logger_handler import logger
 from langchain_core.documents import Document
 
-
 class VectorStoreService:
     def __init__(self):
         self.vector_store = Chroma(
@@ -83,11 +82,11 @@ class VectorStoreService:
                 logger.error(f"[load_documents]文件{path}处理出错，{str(e)}", exc_info=True)
                 continue
 
-if __name__ == '__main__':
-    vs = VectorStoreService()
-    vs.load_documents()
-    retriever = vs.get_retriever()
-    res = retriever.invoke("迷路")
-    for r in res:
-        print(r.page_content)
-        print("="*20)
+# if __name__ == '__main__':
+#     vs = VectorStoreService()
+#     vs.load_documents()
+#     retriever = vs.get_retriever()
+#     res = retriever.invoke("迷路")
+#     for r in res:
+#         print(r.page_content)
+#         print("="*20)

@@ -22,7 +22,7 @@ if prompt:
 
     response_message = []
     with st.spinner("思考中..."):
-        rea_stream = st.session_state["agent"].execute_stream(prompt)
+        res_stream = st.session_state["agent"].execute_stream(prompt)
 
         def capture(generator, cache_list):
             for chunk in generator:
@@ -33,6 +33,6 @@ if prompt:
                     time.sleep(0.01)
                     yield char
 
-        st.chat_message("assistant").write(capture(rea_stream, response_message))
+        st.chat_message("assistant").write(capture(res_stream, response_message))
         st.session_state["message"].append({"role": "assistant", "content": response_message[-1]})
         st.rerun()
