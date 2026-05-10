@@ -23,7 +23,11 @@ class ReactAgent:
             ]
         }
 
-        for chunk in self.agent.stream(input_dict, stream_mode="values", context={"report": False}):
+        for chunk in self.agent.stream(
+                input_dict,
+                stream_mode="values",
+                context={"report": False}
+        ):
             latest_message = chunk["messages"][-1]
             yield latest_message.content.strip() + "\n"
 
